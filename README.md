@@ -1,3 +1,7 @@
+Configure settings in config/settings.yml.
+
+Necessary to fill out: GitHub client ID, client secret, blog owner (GitHub user ID), SSL cert, and SSL key
+
 ```bash
 stack exec -- yesod devel
 ```

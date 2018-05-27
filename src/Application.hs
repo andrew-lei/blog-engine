@@ -38,7 +38,7 @@ import Network.Wai.Middleware.RequestLogger (Destination (Logger),
                                              mkRequestLogger, outputFormat)
 import System.Log.FastLogger                (defaultBufSize, newStdoutLoggerSet,
                                              toLogStr)
-
+import Control.Concurrent                   (forkIO)
 -- Import all relevant handler modules here.
 -- Don't forget to add new modules to your cabal file!
 import Handler.BlogEntries
@@ -130,6 +130,7 @@ warpSettings foundation =
             (toLogStr $ "Exception from Warp: " ++ show e))
       defaultSettings
 
+
 -- | For yesod devel, return the Warp settings and WAI Application.
 getApplicationDev :: IO (Settings, Application)
 getApplicationDev = do
@@ -164,7 +165,7 @@ appMain = do
     app <- makeApplication foundation
 
     -- Run the application with Warp
-    --runSettings (warpSettings foundation) app
+    _ <- forkIO $ runSettings (warpSettings foundation {appSettings = (appSettings foundation) { appPort = 80 }}) app
     runTLS (tlsS settings) (warpSettings foundation) app
 
 

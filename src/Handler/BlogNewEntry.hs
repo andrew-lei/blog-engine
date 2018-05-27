@@ -66,9 +66,9 @@ entryForm = renderDivs $ (,,) <$> fileAFormReq "File"
                               <*> fileAFormMult "Assets"
                               <*> lift (liftIO getCurrentTime)
 
-writeToServer :: FilePath -> FileInfo -> Handler FilePath
+writeToServer :: FilePath -> FileInfo -> IO FilePath
 writeToServer dirpath file = do
-    liftIO $ fileMove file path'
+    fileMove file path'
     return filename
   where
     filename = unpack $ fileName file
@@ -108,6 +108,7 @@ postBlogNewR = do
         
         liftIO $ do createDirectoryIfMissing True dirpath
                     renderMarkupToByteStringIO (writeFile fname) html
+                    _ <- writeToServer dirpath file
                     mapM_ (\x -> fileMove x $ dirpath </> (unpack . fileName) x) images
         let title = stringify . docTitle $ meta
         desc'' <- ExceptT . return . maybeToRight "No description" 

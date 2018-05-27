@@ -34,7 +34,7 @@ database:
   host:     "_env:PGHOST:localhost"
   port:     "_env:PGPORT:5432"
   # See config/test-settings.yml for an override during tests
-  database: "_env:PGDATABASE:myblog"
+  database: "_env:PGDATABASE:blog"
   poolsize: "_env:PGPOOLSIZE:10"
 
 #github:

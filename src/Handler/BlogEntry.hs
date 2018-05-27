@@ -32,7 +32,7 @@ metaTagsHtml MetaTags{..} = toWidgetHead
     <meta property=og:title content=#{metaTitle}>
     <meta property=og:url content=#{metaUrl}>
     <meta name=description property=og:description content=#{metaDescription}>
-    <meta name=author property=og:author content=#{metaAuthor}>
+    <meta name=author content=#{metaAuthor}>
     <meta name=keywords content=#{intercalate "," (map unpack metaKeywords)}>
     $maybe image <- metaImage
          <meta property=og:image content=#{image}>
